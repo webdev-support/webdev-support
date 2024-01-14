@@ -5,18 +5,18 @@
 - Android WebView
 - GeckoView
 - Crosswalk
-- Chromium Content Shell
+- Webview_instrumentation_apk
 - X5内核
 
 ## 2. WebView 方案的对比
 
-| 方案                     | 优点                                                                       | 缺点                                                                                                                                                            |
-|------------------------|--------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Android WebView        | 1. 系统自带，无需额外集成<br> 2. 版本越高渲染性能越好,对css/js的支持能力更强                          | 1. 40~120 的各个版本的WebView 兼容性难以处理, 并且有一些品牌手机无法通过安装的方式升级WebView  <br> 2. disk cache缓存大小限制在20M,照片太多会造成缓存失效的额外请求 <br> 3. 相机适配是一个很大的问题, 开源的扫码JS,对于WebView的兼容性是灾难性的. |
-| GeckoView              | 1. 作为独立的库引入项目,可以获得源码支持<br> 2. 对缓存的支持更强, 比WebView开放的设置更加丰富, 比如缓存,代理,内容拦截等 | 1. 对文件选择依然有一些BUG, 但是影响不大 <br>2. 性能弱于WebView的方案  <br>3. 很多网站对firefox 引擎支持不太好  <br> 资料相对于系统WebView太少少,Android开发者有难度,需要阅读源码. <br> 4. 引入armv8的方案大约会增加60M的大小       |
-| Chromium Content Shell | 1. WebView 基于该方案编译,网页兼容性强,接口设置基本能和WebView保持一致性 <br> 2. 有源码方便排查问题         | 1. 使用软解码模式容易掉帧, 使用硬解码进入多任务后直接黑屏 <br>2. 性能比WebView 差不少  <br> 3. 编译耗时太长, 开源自构建的项目已经停止维护                                                                         |
-| X5内核                   | 1. 微信的小程序使用该方案,兼容性强 <br> 2. 内核更新后渐渐的跟上了Chromium 的版本号,性能不会太差              | 1. 没有源码支持,出现问题后,可能无法得到X5团队的支持 <br> 2. 对于商业应用可能有一定的风险.                                                                                                         |
-| Crosswalk              | 1. 2017年停止维护                                                             | 1. 2017年停止维护                                                                                                                                                  |
+| 方案                          | 优点                                                                       | 缺点                                                                                                                                                                               |
+|-----------------------------|--------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Android WebView             | 1. 系统自带，无需额外集成<br> 2. 版本越高渲染性能越好,对css/js的支持能力更强                          | 1. 40~120 的各个版本的WebView 兼容性难以处理, 并且有一些品牌手机无法通过安装的方式升级WebView  <br> 2. disk cache缓存大小限制在20M,照片太多会造成缓存失效的额外请求 <br> 3. 相机适配是一个很大的问题, 开源的扫码JS,对于WebView的兼容性是灾难性的.                    |
+| GeckoView                   | 1. 作为独立的库引入项目,可以获得源码支持<br> 2. 对缓存的支持更强, 比WebView开放的设置更加丰富, 比如缓存,代理,内容拦截等 | 1. 对文件选择依然有一些BUG, 但是影响不大 <br>2. 性能弱于WebView的方案  <br>3. 很多网站对firefox 引擎支持不太好  <br> 资料相对于系统WebView太少,Android开发者适配有难度,需要阅读源码. <br> 4. 引入armv8的方案大约会增加60M的大小,不过可以自己修改源码达到动态下载.so 的方案 |
+| webview_instrumentation_apk | 1. WebView 基于该方案编译,网页兼容性强,接口设置基本能和WebView保持一致性 <br> 2. 有源码方便排查问题         | 1. 使用软解码模式容易掉帧, 使用硬解码进入多任务后直接黑屏 <br>2. 性能比WebView 差不少  <br> 3. 编译耗时太长, 开源自构建的项目已经停止维护                                                                                            |
+| X5内核                        | 1. 微信的小程序使用该方案,兼容性强 <br> 2. 内核更新后渐渐的跟上了Chromium 的版本号,性能不会太差              | 1. 没有源码支持,出现问题后,可能无法得到X5团队的支持 <br> 2. 对于商业应用可能有一定的风险.                                                                                                                            |
+| Crosswalk                   | 1. 2017年停止维护                                                             | 1. 2017年停止维护                                                                                                                                                                     |
 
 ## 方案排名
 
@@ -26,15 +26,17 @@
    但是集成成本较高, 需要Android后端开发者的支持. 如果团队能力强, 可以考虑使用该方案.
 3. 使用Android WebView + GeckoView 的混合方案. 通过判断手机WebView版本来决定使用哪个方案. 比如手机的WebView 版本版本低于90.X,
    则使用GeckoView, 否则使用WebView. 在需要使用兼容更多陈旧的设备的时候, 可以考虑使用该方案.
-4. Chromium Content Shell,公司有人才,有时间,有精力,有资源,可以考虑使用该方案. 但是需要注意的是, 该方案的工作非常繁琐,
+4. webview_instrumentation_apk 公司有人才,有时间,有精力,有资源,可以考虑使用该方案. 但是需要注意的是, 该方案的工作非常繁琐,
    需要自己编译,自己维护,自己解决问题.
 5. X5个人项目可以使用, 商业项目不建议使用. 无法获取源码支持, 无法保证安全性.
 
-总结: 其中前三个方案是比较靠谱的. 从利益最大化的角度个人推荐使用方案3, 并且方案3的实现也是比较简单的,小公司而言,可以使用该方案.  第4种方案的实现成本太高, 除非公司有money, 能够养的得起一帮维护chromium的人才,否则不建议使用该方案.  
+总结: 其中前三个方案是比较靠谱的. 从利益最大化的角度个人推荐使用方案3, 并且方案3的实现也是比较简单的,我们公司采用的就是方案3.
+第4种方案, 鉴于国内只有X5和U4内核商业化了,并且是2大巨头,我个人不觉得国内会有小公司去使用第4种方案.
 
 ## WebView 一些问题
 
 ### 页面白屏
+
 1.页面JS语法,不兼容. 修改js到兼容的语法
 2.页面的JS 加载失败.排查网络问题
 
@@ -48,9 +50,9 @@ WebView的一部分进程是系统进程,和其他方案有天然的优势, 提�
 
 ## 参考地址:
 
-> GeckoView 官方地址  https://github.com/mozilla/geckoview <br>
-> CrossWalk(chromium_53)官方地址 https://github.com/crosswalk-project/crosswalk <br>
-> CrossWalk(chromium_77)第三方维护版本 https://github.com/ks32/CrosswalkNative <br>
-> Chromium Content Shell 编译 https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md
-> 自编译 Chromium Content Shell https://github.com/ridi/chromium-aw <br>
-> X5内核官方地址 https://x5.tencent.com/tbs/guide/sdkInit.html
+1. GeckoView 官方地址  https://github.com/mozilla/geckoview <br>
+2. CrossWalk(chromium_53)官方地址 https://github.com/crosswalk-project/crosswalk <br>
+3. CrossWalk(chromium_77)第三方维护版本 https://github.com/ks32/CrosswalkNative <br>
+4. webview_instrumentation_apk编译 https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md <br>
+5. 自编译 webview_instrumentation_apk https://github.com/ridi/chromium-aw <br>
+6. X5内核官方地址 https://x5.tencent.com/tbs/guide/sdkInit.html

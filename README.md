@@ -42,7 +42,8 @@
 
 对于一些老的设备， 无法升级到最新的系统， 无法升级到最新的WebView，如何处理网页的语法兼容性， 甚至是要修改一些依赖库的源码，
 这是一个非常大的挑战。
-当然无论是Android的兼容性问题，还是WebView的兼容性问题，还有很重要的就是WebView在部分手机重多任务再次进入后白屏(非常严重),都需要开发者自己去解决， 或者向一些技术咨询公司寻求帮助。
+当然无论是Android的兼容性问题，还是WebView的兼容性问题，还有很重要的就是WebView在部分手机重多任务再次进入后白屏(非常严重)
+,都需要开发者自己去解决， 或者向一些技术咨询公司寻求帮助。
 
 ### WebView 集成
 
@@ -53,6 +54,7 @@
 5. WebView 获取地理位置
 6. WebView 套壳,WebView加载本地资源
 7. WebView自定义错误页面
+8. WebView支持视频全屏播放,支持后台播放
 
 上面的这些都是WebView 需要适配的内容
 
@@ -61,9 +63,11 @@
 WebView的一部分进程是系统进程，和其他方案有天然的优势， 提前初始化，内存占用也少。
 
 ## 参考地址:
+
 1. GeckoView 官方地址  https://github.com/mozilla/geckoview
 2. CrossWalk(chromium_53)官方地址 https://github.com/crosswalk-project/crosswalk
 3. CrossWalk(chromium_77)第三方维护版本 https://github.com/ks32/CrosswalkNative
-4. webview_instrumentation_apk https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md
+4.
+webview_instrumentation_apk https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md
 5. 自编译webview_instrumentation_apk https://github.com/ridi/chromium-aw
 6. X5内核官方地址 https://x5.tencent.com/tbs/guide/sdkInit.html
